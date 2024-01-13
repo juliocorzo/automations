@@ -4,7 +4,7 @@ import HomeLayout from '@/components/layouts/home';
 const HomePage = () => (
   <HomeLayout title="ROCS-II Home">
     <Typography variant="h2" component="h1">
-      ROCS-II Home
+      automations
     </Typography>
     <Typography
       variant="h4"
@@ -12,7 +12,7 @@ const HomePage = () => (
       gutterBottom
       sx={{ color: (theme) => theme.palette.text.disabled }}
     >
-      Name pending
+      Because I really want to code when I get home from work
     </Typography>
   </HomeLayout>
 );

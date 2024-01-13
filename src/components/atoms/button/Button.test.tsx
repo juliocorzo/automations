@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import Button from '@/components/atoms/button';
+import { Button } from '@/components/atoms/button';
 
 describe('Button component', () => {
   it('renders correctly with approriate role', () => {
