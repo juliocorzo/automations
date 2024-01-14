@@ -2,14 +2,14 @@ import { Button as MuiButton } from '@mui/material';
 import type { ButtonProps as MuiButtonProps } from '@mui/material';
 import type { ReactNode } from 'react';
 
-interface ButtonProps extends MuiButtonProps {
+export interface ButtonProps extends MuiButtonProps {
   /** If `true`, the button text will be uppercased. */
   uppercase?: boolean;
   disabled?: boolean;
   color?: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
   size?: 'small' | 'medium' | 'large';
   variant?: 'text' | 'outlined' | 'contained';
-  children: ReactNode;
+  children?: ReactNode;
   fullWidth?: boolean;
 }
 

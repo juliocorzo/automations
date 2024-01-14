@@ -2,7 +2,7 @@ import { Typography } from '@mui/material';
 import HomeLayout from '@/components/layouts/home';
 
 const HomePage = () => (
-  <HomeLayout title="ROCS-II Home">
+  <HomeLayout title="automations">
     <Typography variant="h2" component="h1">
       automations
     </Typography>
