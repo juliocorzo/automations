@@ -7,7 +7,7 @@ export type PerformanceMetricReadableName =
   'Inlet Temperature' | 'Outlet Temperature' | 'Cooling Power' | 'Flow Rate' | 'CPU Temperature' |
   'CPU Power' | 'GPU Power' | 'Flow Rate' |
   'CPU Load' | 'GPU Temperature' | 'GPU Load' | 'Memory Load' |
-  'Motherboard Front Temperature' | 'Motherboard Back Temperature' | 'Motherboard VRM' | 'Motherboard Chipset';
+  'Motherboard Front Temperature' | 'Motherboard Back Temperature' | 'Case Temperature' | 'Motherboard Chipset';
 
 export type PerformanceMetricUnit = 'C' | 'W' | 'l/h' | '%';
 
