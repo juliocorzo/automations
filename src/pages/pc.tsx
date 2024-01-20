@@ -4,20 +4,6 @@ import { MetricCard } from '@/components/atoms/metric-card';
 import { useGetPerformanceMetricQuery } from '@/store/services/performance-metric';
 
 const PerformanceMetrics = () => {
-  // const [metrics, setMetrics] = useState<unknown>(null);
-  // useEffect(() => {
-  //   const fetchMetrics = async () => {
-  //     try {
-  //       const response = await fetch('/api/performance-metric');
-  //       const data = await response.json();
-  //       setMetrics(data);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-
-  //   fetchMetrics();
-  // }, []);
   const {
     data: metrics,
     error,

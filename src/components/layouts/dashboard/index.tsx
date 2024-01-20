@@ -10,7 +10,9 @@ type DashboardLayoutProps = {
   children?: ReactNode;
 };
 
-const DashboardLayout = ({ title, description, children }: DashboardLayoutProps) => (
+const DashboardLayout = ({
+  title, description, children,
+}: DashboardLayoutProps) => (
   <Base title={title} description={description}>
     <Container maxWidth="xl" sx={{ marginTop: 4 }}>
       {children}

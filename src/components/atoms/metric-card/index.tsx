@@ -48,7 +48,6 @@ export const MetricCard = ({
         </Typography>
       </Typography>
       <Slider
-          // color={color}
         track={false}
         disabled
         value={value}

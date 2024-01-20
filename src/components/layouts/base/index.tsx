@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import type { ReactNode } from 'react';
+import { AppHeader } from '@/components/atoms/header';
 
 type LayoutProps = {
   title: string;
@@ -7,13 +8,16 @@ type LayoutProps = {
   children?: ReactNode;
 };
 
-const BaseLayout = ({ title, description, children }: LayoutProps) => (
+const BaseLayout = ({
+  title, description, children,
+}: LayoutProps) => (
   <>
     <Head>
       <title>{title}</title>
       {description && <meta name="description" content={description} />}
     </Head>
     <main>
+      <AppHeader />
       {children}
     </main>
   </>
