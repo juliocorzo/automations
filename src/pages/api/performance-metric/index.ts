@@ -21,21 +21,21 @@ export const generateMetric = (data: AquasuiteResponse): AquasuiteFlatResponse =
 
 const generateFakeMetric = (): AquasuiteFlatResponse => {
   const fakeMetric = {
-    liquid_in_temp: 0,
-    liquid_out_temp: 0,
-    front_mid_air_temp: 0,
-    back_top_air_temp: 0,
-    back_mid_air_temp: 0,
-    cpu_package_temp: 0,
-    gpu_core_temp: 0,
-    cooling_power: 0,
-    cpu_package_power: 0,
-    gpu_package_power: 0,
-    liquid_flow_rate: 0,
-    cpu_load: 0,
-    memory_load: 0,
-    gpu_load: 0,
-    timestamp: new Date('2024-01-15T06:36:46.889287Z'),
+    inletTemperature: 0,
+    outletTemperature: 0,
+    coolingPower: 0,
+    flowRate: 0,
+    cpuTemperature: 0,
+    cpuLoad: 0,
+    cpuPower: 0,
+    gpuTemperature: 0,
+    gpuLoad: 0,
+    gpuPower: 0,
+    memoryLoad: 0,
+    airMotherboardFrontTemperature: 0,
+    airMotherboardBackTemperature: 0,
+    airCaseTemperature: 0,
+    createdAt: new Date(),
   };
 
   return fakeMetric;
