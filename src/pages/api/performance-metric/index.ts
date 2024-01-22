@@ -71,12 +71,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     if (GENERATE_FAKE_METRIC) {
       res.status(200).json(generateFakeMetric());
+    } else {
+      const response = await fetch(url);
+      const body: AquasuiteResponse = await response.json();
+      const metric = generateMetric(body);
+      const databaseMetric = generateDatabaseMetric(metric);
+      res.status(200).json(databaseMetric);
     }
-    const response = await fetch(url);
-    const body: AquasuiteResponse = await response.json();
-    const metric = generateMetric(body);
-    const databaseMetric = generateDatabaseMetric(metric);
-    res.status(200).json(databaseMetric);
   } catch (error) {
     res.status(500).json({ error: 'Failed to load PC metrics' });
   }
