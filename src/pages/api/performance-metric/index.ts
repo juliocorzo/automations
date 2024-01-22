@@ -19,7 +19,7 @@ export const generateMetric = (data: AquasuiteResponse): AquasuiteFlatResponse =
   return { ...metrics, timestamp: new Date(data.t) };
 };
 
-const generateFakeMetric = (): AquasuiteFlatResponse => {
+const generateFakeMetric = (): Omit<PerformanceMetric, 'id'> => {
   const fakeMetric = {
     inletTemperature: 0,
     outletTemperature: 0,
