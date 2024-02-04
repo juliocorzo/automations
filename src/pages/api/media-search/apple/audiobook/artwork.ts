@@ -67,30 +67,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return;
     }
 
-    const artworkResponse = await fetch(firstResult.artworkUrl);
-    if (!artworkResponse.ok) {
-      res.status(503).json({
-        error: `Failed to fetch artwork from the Apple API. External response was ${artworkResponse.status} ${artworkResponse.statusText}`,
-      });
-      return;
-    }
-
-    const artworkBlob = await artworkResponse.blob();
-    const artworkBuffer = await artworkBlob.arrayBuffer();
-    const buffer = Buffer.from(artworkBuffer);
-
     res.setHeader('Content-Type', 'image/jpeg');
 
     if (download === 'true') {
       res.setHeader('Content-disposition', `attachment; filename=${filename}.jpg`);
     }
 
-    if (buffer.byteLength > 12 * 1024 * 1024) {
-      res.status(500).json({ error: 'Artwork is too large to process' });
-      return;
-    }
-
-    res.send(buffer);
+    res.redirect(308, firstResult.artworkUrl);
   } catch (error) {
     res.status(500).json({ error: 'Unknown error when fetching data from the Apple API' });
   }
