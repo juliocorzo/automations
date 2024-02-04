@@ -16,7 +16,7 @@ export interface ButtonProps extends MuiButtonProps {
 /**
  * Material UI Button component with predefined commonly-used defaults
  */
-export const Button = ({
+export function Button({
   uppercase = false,
   disabled = false,
   color = 'primary',
@@ -25,20 +25,22 @@ export const Button = ({
   fullWidth = false,
   children,
   ...props
-}: ButtonProps) => (
-  <MuiButton
-    color={color}
-    variant={variant}
-    disabled={disabled}
-    size={size}
-    fullWidth={fullWidth}
-    {...props}
-    sx={{
-      textTransform: uppercase ? 'uppercase' : 'none',
-    }}
-  >
-    {children}
-  </MuiButton>
-);
+}: ButtonProps) {
+  return (
+    <MuiButton
+      color={color}
+      variant={variant}
+      disabled={disabled}
+      size={size}
+      fullWidth={fullWidth}
+      {...props}
+      sx={{
+        textTransform: uppercase ? 'uppercase' : 'none',
+      }}
+    >
+      {children}
+    </MuiButton>
+  );
+}
 
 export default Button;

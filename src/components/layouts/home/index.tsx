@@ -8,12 +8,14 @@ type LayoutProps = {
   children?: ReactNode;
 };
 
-const HomeLayout = ({ title, description, children }: LayoutProps) => (
-  <Base title={title} description={description}>
-    <Container maxWidth="md" sx={{ marginTop: 4 }}>
-      {children}
-    </Container>
-  </Base>
-);
+function HomeLayout({ title, description, children }: LayoutProps) {
+  return (
+    <Base title={title} description={description}>
+      <Container maxWidth="md" sx={{ marginTop: 4 }}>
+        {children}
+      </Container>
+    </Base>
+  );
+}
 
 export default HomeLayout;

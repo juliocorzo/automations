@@ -6,20 +6,22 @@ import { DocumentHeadTags, documentGetInitialProps } from '@mui/material-nextjs/
 import type { DocumentHeadTagsProps } from '@mui/material-nextjs/v14-pagesRouter';
 import { lightTheme } from '@/utilities/styles/theme';
 
-const MyDocument = (props: DocumentProps & DocumentHeadTagsProps) => (
-  <Html lang="en">
-    <Head>
-      <meta name="theme-color" content={lightTheme.palette.primary.main} />
-      <link rel="shortcut icon" href="/favicon.ico" />
-      <meta name="emotion-insertion-point" content="" />
-      <DocumentHeadTags {...props} />
-    </Head>
-    <body>
-      <Main />
-      <NextScript />
-    </body>
-  </Html>
-);
+function MyDocument(props: DocumentProps & DocumentHeadTagsProps) {
+  return (
+    <Html lang="en">
+      <Head>
+        <meta name="theme-color" content={lightTheme.palette.primary.main} />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <meta name="emotion-insertion-point" content="" />
+        <DocumentHeadTags {...props} />
+      </Head>
+      <body>
+        <Main />
+        <NextScript />
+      </body>
+    </Html>
+  );
+}
 
 MyDocument.getInitialProps = async (ctx: DocumentContext) => {
   const finalProps = await documentGetInitialProps(ctx);

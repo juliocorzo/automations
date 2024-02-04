@@ -11,11 +11,11 @@ export interface DividerProps extends Omit<MuiDividerProps, 'orientation'> {
   noSsr?: boolean;
 }
 
-export const Divider = ({
+export function Divider({
   responsiveBreakpoint = 'md',
   noSsr = false,
   ...props
-}: DividerProps) => {
+}: DividerProps) {
   const isMobile = useMediaQuery(({
     breakpoints,
   }: Theme) => breakpoints.down(responsiveBreakpoint), { noSsr });
@@ -23,6 +23,6 @@ export const Divider = ({
   return (
     <MuiDivider {...props} orientation={!isMobile ? 'vertical' : 'horizontal'} />
   );
-};
+}
 
 export default Divider;

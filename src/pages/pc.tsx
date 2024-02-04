@@ -3,7 +3,7 @@ import DashboardLayout from '@/components/layouts/dashboard';
 import { MetricCard } from '@/components/atoms/metric-card';
 import { useGetPerformanceMetricQuery } from '@/store/services/performance-metric';
 
-const PerformanceMetrics = () => {
+function PerformanceMetrics() {
   const {
     data: metrics,
     error,
@@ -189,6 +189,6 @@ const PerformanceMetrics = () => {
       )}
     </DashboardLayout>
   );
-};
+}
 
 export default PerformanceMetrics;

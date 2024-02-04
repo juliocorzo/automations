@@ -7,7 +7,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { darkTheme } from '@/utilities/styles/theme';
 import { store } from '@/store';
 
-const MyApp = (props: AppProps) => {
+function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
 
   return (
@@ -23,6 +23,6 @@ const MyApp = (props: AppProps) => {
       </ThemeProvider>
     </AppCacheProvider>
   );
-};
+}
 
 export default MyApp;

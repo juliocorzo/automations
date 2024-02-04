@@ -24,42 +24,44 @@ export type MetricCardProps = {
   max: number;
 };
 
-export const MetricCard = ({
+export function MetricCard({
   title,
   value,
   unit,
   min,
   max,
-}: MetricCardProps) => (
-  <Card sx={{ minWidth: '240px' }}>
-    <CardContent>
-      <Typography
-        color="textSecondary"
-        gutterBottom
-        variant="h6"
-        component="h2"
-      >
-        {title}
-      </Typography>
-      <Typography variant="h3" component="div">
-        {value}
-        <Typography marginLeft={1} variant="h5" component="span">
-          {unit}
+}: MetricCardProps) {
+  return (
+    <Card sx={{ minWidth: '240px' }}>
+      <CardContent>
+        <Typography
+          color="textSecondary"
+          gutterBottom
+          variant="h6"
+          component="h2"
+        >
+          {title}
         </Typography>
-      </Typography>
-      <Slider
-        track={false}
-        disabled
-        value={value}
-        min={min}
-        max={max}
-        sx={{
-          marginTop: 2,
-          marginBottom: -2,
-        }}
-      />
-    </CardContent>
-  </Card>
-);
+        <Typography variant="h3" component="div">
+          {value}
+          <Typography marginLeft={1} variant="h5" component="span">
+            {unit}
+          </Typography>
+        </Typography>
+        <Slider
+          track={false}
+          disabled
+          value={value}
+          min={min}
+          max={max}
+          sx={{
+            marginTop: 2,
+            marginBottom: -2,
+          }}
+        />
+      </CardContent>
+    </Card>
+  );
+}
 
 export default MetricCard;
