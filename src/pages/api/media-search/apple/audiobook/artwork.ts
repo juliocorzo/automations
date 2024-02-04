@@ -8,6 +8,12 @@ import type { AppleAudioBookResponse } from '@/pages/api/media-search/apple/audi
  * Returns artwork for the first audiobook result from the iTunes API
  */
 
+export const config = {
+  api: {
+    responseLimit: '12mb',
+  },
+};
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const {
     term,
@@ -77,6 +83,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     if (download === 'true') {
       res.setHeader('Content-disposition', `attachment; filename=${filename}.jpg`);
+    }
+
+    if (buffer.byteLength > 12 * 1024 * 1024) {
+      res.status(500).json({ error: 'Artwork is too large to process' });
+      return;
     }
 
     res.send(buffer);
