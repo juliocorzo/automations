@@ -1,6 +1,3 @@
-export const mediaTypes = ['audiobook'] as const;
-export type Media = typeof mediaTypes[number];
-
 export const appleAudioBookResultKeys = [
   'wrapperType',
   'artistId',
@@ -47,18 +44,29 @@ type AppleAudioBookResult = {
 };
 
 /** Current return format for iTunes API's Audiobook entity search query */
-export type AppleAudioBookResponse = {
+export type AppleAudiobookResponse = {
   resultCount: number;
   results: AppleAudioBookResult[];
 };
 
-/** Format of the individual results for the /api/media-search/apple/audiobook/search endpoint */
-type InternalAudioBookResult = {
-  artist: string;
-  name: string;
-  description: string;
-  artworkUrl: string;
-};
+/**
+ * Type guard for the response from the Apple APIe
+ * @returns `true` if the response is the expected Apple audiobook response, `false` otherwise
+ */
+export function isAppleAudiobookResponse(response: unknown): boolean {
+  if ((response as AppleAudiobookResponse)?.resultCount === undefined) {
+    return false;
+  }
 
-/** Return format for the /api/media-search/apple/audiobook/search endpoint */
-export type InternalAudioBookResponse = InternalAudioBookResult[];
+  for (let i = 0; i < (response as AppleAudiobookResponse).resultCount; i += 1) {
+    const result = (response as AppleAudiobookResponse).results[i];
+
+    for (let f = 0; f < appleAudioBookResultKeys.length; f += 1) {
+      if (result?.[appleAudioBookResultKeys[f]] === undefined) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}

@@ -10,14 +10,16 @@ type DashboardLayoutProps = {
   children?: ReactNode;
 };
 
-const DashboardLayout = ({
+function DashboardLayout({
   title, description, children,
-}: DashboardLayoutProps) => (
-  <Base title={title} description={description}>
-    <Container maxWidth="xl" sx={{ marginTop: 4 }}>
-      {children}
-    </Container>
-  </Base>
-);
+}: DashboardLayoutProps) {
+  return (
+    <Base title={title} description={description}>
+      <Container maxWidth={false} sx={{ marginTop: 2 }}>
+        {children}
+      </Container>
+    </Base>
+  );
+}
 
 export default DashboardLayout;

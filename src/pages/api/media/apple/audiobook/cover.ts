@@ -1,8 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import type { AppleAudiobookResponse } from '@/types/media/apple/audiobook';
+import { isAppleAudiobookResponse } from '@/types/media/apple/audiobook';
 import {
-  generateSearchUrl, isAppleResponse, parseResponse,
-} from '@/pages/api/media-search/apple/util';
-import type { AppleAudioBookResponse } from '@/pages/api/media-search/apple/audiobook.types';
+  generateSearchUrl, parseResponse,
+} from '@/pages/api/media/apple/audiobook';
 
 /**
  * Returns artwork for the first audiobook result from the iTunes API
@@ -52,13 +53,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const appleResponse: unknown = await response.json();
 
-    if (!isAppleResponse(appleResponse)) {
+    if (!isAppleAudiobookResponse(appleResponse)) {
       res.status(500).json({ error: 'Invalid response from the Apple API' });
       return;
     }
 
     // Type guard above ensures that the response is the expected type, unsure why TS is not happy
-    const internalResponse = parseResponse(appleResponse as AppleAudioBookResponse);
+    const internalResponse = parseResponse(appleResponse as AppleAudiobookResponse);
 
     const firstResult = internalResponse[0];
 
@@ -73,7 +74,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       res.setHeader('Content-disposition', `attachment; filename=${filename}.jpg`);
     }
 
-    res.redirect(308, firstResult.artworkUrl);
+    res.redirect(308, firstResult.coverUrlLarge);
   } catch (error) {
     res.status(500).json({ error: 'Unknown error when fetching data from the Apple API' });
   }

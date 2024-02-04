@@ -8,19 +8,21 @@ type LayoutProps = {
   children?: ReactNode;
 };
 
-const BaseLayout = ({
+function BaseLayout({
   title, description, children,
-}: LayoutProps) => (
-  <>
-    <Head>
-      <title>{title}</title>
-      {description && <meta name="description" content={description} />}
-    </Head>
-    <main>
-      <AppHeader />
-      {children}
-    </main>
-  </>
-);
+}: LayoutProps) {
+  return (
+    <>
+      <Head>
+        <title>{title}</title>
+        {description && <meta name="description" content={description} />}
+      </Head>
+      <main>
+        <AppHeader />
+        {children}
+      </main>
+    </>
+  );
+}
 
 export default BaseLayout;
