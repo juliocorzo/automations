@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import type { ReactNode } from 'react';
-import { AppHeader } from '@/components/atoms/header';
+import { Header } from '@/components/atoms/header';
 
 type LayoutProps = {
   title: string;
@@ -18,7 +18,7 @@ function BaseLayout({
         {description && <meta name="description" content={description} />}
       </Head>
       <main>
-        <AppHeader />
+        <Header title={title} description={description} />
         {children}
       </main>
     </>

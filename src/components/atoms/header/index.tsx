@@ -1,11 +1,18 @@
 import {
   Container, Stack, Typography,
 } from '@mui/material';
-import { Header } from '@/components/atoms/header/Header.styles';
+import { Header as StyledHeader } from '@/components/atoms/header/Header.styles';
 
-export function AppHeader() {
+type HeaderProps = {
+  /** Page title and main header */
+  title: string;
+  /** Page description */
+  description?: string;
+};
+
+export function Header({ title, description }: HeaderProps) {
   return (
-    <Header>
+    <StyledHeader>
       <Container
         maxWidth={false}
         sx={{
@@ -16,14 +23,14 @@ export function AppHeader() {
         }}
       >
         <Stack direction="row" spacing={2} marginY={2}>
-          <strong>Audiobook cover downloader</strong>
+          <strong>{title}</strong>
           <Typography>
-            Uses public-facing APIs and some trickery to force the highest resolution possible
+            {description}
           </Typography>
         </Stack>
       </Container>
-    </Header>
+    </StyledHeader>
   );
 }
 
-export default AppHeader;
+export default Header;

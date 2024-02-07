@@ -5,26 +5,29 @@ import {
   ToggleButtonGroup,
   Grid,
   Card,
-  CardMedia,
   CardHeader,
   Typography,
   CardActionArea,
   Tooltip,
+  Button,
 } from '@mui/material';
 import Image from 'next/image';
 import { LoadingButton } from '@mui/lab';
 import DownloadIcon from '@mui/icons-material/Download';
 import PreviewIcon from '@mui/icons-material/Preview';
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import DashboardLayout from '@/components/layouts/dashboard';
-import { useSearchAppleAudiobookQuery } from '@/store/media/apple/audiobook';
+import { useSearchInternalAudiobookQuery } from '@/store/media/internal/audiobook';
 import { toKebabCase, toTitleCase } from '@/utilities/strings/case';
 import { removeRepeatedChar, slugify } from '@/utilities/strings/sanitize';
+import { ProgressiveImage } from '@/components/atoms/progressive-image';
 
 const downloadSources = ['apple', 'audible'] as const;
 type DownloadSources = typeof downloadSources[number];
 
 export default function Audiobook() {
   const [downloadSource, setDownloadSource] = useState<DownloadSources | null>('apple');
+  const [preSearchString, setPreSearchString] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [lastSearchTerm, setLastSearchTerm] = useState<string | null>(null);
   const [mode, setMode] = useState<'download' | 'preview'>('download');
@@ -33,8 +36,7 @@ export default function Audiobook() {
   const {
     data: searchResults,
     isLoading: searchResultsLoading,
-  } = useSearchAppleAudiobookQuery(searchTerm, { skip: !loading });
-
+  } = useSearchInternalAudiobookQuery(encodeURIComponent(searchTerm), { skip: !loading });
   const handleDownloadSourceChange = (
     event: React.MouseEvent<HTMLElement>,
     newDownloadSource: DownloadSources,
@@ -72,8 +74,8 @@ export default function Audiobook() {
     a.click();
   };
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.currentTarget.value);
+  const handleTextInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setPreSearchString(event.target.value);
   };
 
   const showError = searchResults
@@ -115,11 +117,19 @@ export default function Audiobook() {
                 arrow
               >
                 <ToggleButton
+                  // WIP, no other sources exist yet
                   value={source}
-              // WIP, no other sources exist yet
                   disabled={source !== 'apple' || searchResultsLoading}
                 >
-                  <Image style={{ filter: `invert(${downloadSource === source ? 1 : 0.50}) sepia(0) saturate(2) hue-rotate(170deg)` }} src={`/icons/${source}.svg`} width="22" height="22" alt={`${source} logo for download selection button`} />
+                  <Image
+                    style={{
+                      filter: `invert(${downloadSource === source ? 1 : 0.5}) sepia(0) saturate(2) hue-rotate(170deg)`,
+                    }}
+                    src={`/icons/${source}.svg`}
+                    width="22"
+                    height="22"
+                    alt={`${source} logo for download selection button`}
+                  />
                 </ToggleButton>
               </Tooltip>
             ))}
@@ -131,9 +141,7 @@ export default function Audiobook() {
             exclusive
             onChange={handleModeChange}
             aria-label="mode"
-            sx={{
-              height: 55,
-            }}
+            sx={{ height: 55 }}
           >
             {['preview', 'download'].map((currentMode) => (
               <Tooltip
@@ -157,27 +165,40 @@ export default function Audiobook() {
         <Grid item xs={8} sm={4}>
           <TextField
             label="Title"
-            value={searchTerm}
-            onChange={handleInputChange}
+            value={preSearchString}
+            onChange={handleTextInputChange}
             disabled={searchResultsLoading}
             fullWidth
             error={showError}
             helperText={showError ? 'No results found' : ''}
             onKeyPress={(ev) => {
-              if (ev.key === 'Enter' && searchTerm !== '') {
-                handleSearch(searchTerm);
+              if (ev.key === 'Enter' && (preSearchString !== '' && preSearchString !== searchTerm)) {
+                handleSearch(preSearchString);
               }
             }}
           />
         </Grid>
+        {/* //TODO: Add option to drop down more options for search */}
+        <Grid item sm="auto">
+          <Button
+            sx={{
+              height: 55,
+            }}
+            disabled
+            variant="outlined"
+            color="info"
+          >
+            <PlaylistAddIcon />
+          </Button>
+        </Grid>
         <Grid item sm="auto">
           <LoadingButton
             fullWidth
-            disabled={!downloadSource || searchTerm === ''}
+            disabled={!downloadSource || preSearchString === '' || preSearchString === searchTerm}
             variant="outlined"
             color="success"
             loading={loading}
-            onClick={() => handleSearch(searchTerm)}
+            onClick={() => handleSearch(preSearchString)}
             sx={{
               height: 55,
             }}
@@ -196,28 +217,27 @@ export default function Audiobook() {
         >
           {searchResults.map((result) => (
             <Grid item key={result.coverUrlLarge}>
-              <Card sx={{ maxWidth: '400px' }}>
-                <CardActionArea onClick={() => handleDownloadClick({
-                  imageUrl: result.coverUrlLarge,
-                  author: result.artist,
-                  title: result.name,
-                })}
+              <Card sx={{ width: '400px', maxWidth: '400px' }}>
+                <CardActionArea
+                  // disabled={index === 0}
+                  onClick={() => handleDownloadClick({
+                    imageUrl: result.coverUrlLarge,
+                    author: result.artist,
+                    title: result.name,
+                  })}
                 >
                   <CardHeader
                     disableTypography
                     title={<Typography variant="h5" noWrap>{result.name}</Typography>}
                     subheader={result.artist}
-                    sx={{
-                      overflow: 'hidden',
-                      display: 'block',
-                    }}
+                    sx={{ overflow: 'hidden', display: 'block' }}
                   />
-                  <CardMedia
-                    component="img"
-                    height="400"
-                    width="400"
-                    image={result.coverUrlLarge}
+                  <ProgressiveImage
+                    lowQualitySrc={result.coverUrlSmall}
+                    highQualitySrc={result.coverUrlLarge}
                     alt={result.name}
+                    width={400}
+                    height={400}
                   />
                 </CardActionArea>
               </Card>

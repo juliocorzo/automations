@@ -1,21 +1,8 @@
-import { Typography } from '@mui/material';
-import HomeLayout from '@/components/layouts/home';
+import BaseLayout from '@/components/layouts/base';
 
 function HomePage() {
   return (
-    <HomeLayout title="automations">
-      <Typography variant="h2" component="h1">
-        automations
-      </Typography>
-      <Typography
-        variant="h4"
-        component="p"
-        gutterBottom
-        sx={{ color: (theme) => theme.palette.text.disabled }}
-      >
-        Because I really want to code when I get home from work
-      </Typography>
-    </HomeLayout>
+    <BaseLayout title="automations" description="overengineered solutions for seldomnly done tasks" />
   );
 }
 

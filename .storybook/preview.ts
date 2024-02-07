@@ -9,7 +9,7 @@ export const decorators = [
       light: lightTheme,
       dark: darkTheme,
     },
-    defaultTheme: 'light',
+    defaultTheme: 'dark',
     Provider: ThemeProvider,
     GlobalStyles: CssBaseline,
   }),

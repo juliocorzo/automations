@@ -31,9 +31,8 @@
       "error",
       {
         "devDependencies": [
-          "test.{ts,tsx}", // repos with a single test file
-          "test-*.{ts,tsx}", // repos with multiple top-level test files
-          "**/*{.,_}{test,spec}.{ts,tsx}", // tests where the extension or filename suffix denotes that it is a test
+          "**/*.stories.{ts,tsx}", // storybook stories
+          "**/*.test.{ts,tsx}", // jest tests
           "**/jest.config.ts", // jest config
           "**/jest.setup.ts" // jest setup
         ],

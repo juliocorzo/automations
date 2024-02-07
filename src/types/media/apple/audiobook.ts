@@ -1,3 +1,26 @@
+import type { AppleMediaOptions } from '@/types/media/apple';
+
+const appleAudiobookAttributes = [
+  'titleTerm',
+  'authorTerm',
+  'genreIndex',
+  'ratingIndex',
+] as const;
+
+type AppleAudiobookAttribute = typeof appleAudiobookAttributes[number];
+
+const appleAudiobookEntities = [
+  'audiobookAuthor',
+  'audiobook',
+] as const;
+
+type AppleAudiobookEntity = typeof appleAudiobookEntities[number];
+
+export interface AppleAudiobookRequest extends Omit<AppleMediaOptions, 'media'> {
+  attribute: AppleAudiobookAttribute;
+  entity: AppleAudiobookEntity;
+}
+
 export const appleAudioBookResultKeys = [
   'wrapperType',
   'artistId',
@@ -21,7 +44,7 @@ export const appleAudioBookResultKeys = [
 ] as const;
 
 /** Format of the individual results from the iTunes API Audiobook entity search query */
-type AppleAudioBookResult = {
+export type AppleAudioBookResult = {
   wrapperType: 'audiobook';
   artistId: number;
   collectionId: number;
