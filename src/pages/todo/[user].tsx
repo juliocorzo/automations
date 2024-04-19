@@ -1,13 +1,18 @@
 import {
   Box,
   Button,
-  Container, Grid, Modal, OutlinedInput, Skeleton, Typography,
+  Container,
+  Grid,
+  Modal,
+  OutlinedInput,
+  Skeleton,
+  Typography,
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import DashboardLayout from '@/components/layouts/dashboard';
-import { useCreateTodoMutation, useGetTodosByUserQuery } from '@/store/todos';
+import { useCreateTodoMutation, useGetTodosByUserQuery, useDeleteTodoByIdMutation } from '@/store/todos';
 import { LoadingButton } from '@mui/lab';
 import { DateTime } from 'luxon';
 
@@ -18,6 +23,7 @@ function Todos() {
   const [createDueDate, setCreateDueDate] = useState<DateTime | null>(null);
 
   const { user } = useRouter().query;
+
   const {
     data: todos,
     error,
@@ -28,6 +34,10 @@ function Todos() {
     createTodo,
     { isLoading: createLoading, isError: createError },
   ] = useCreateTodoMutation();
+
+  const [
+    deleteTodo,
+  ] = useDeleteTodoByIdMutation();
 
   return (
     <DashboardLayout title="RTK Query & Next.js API Demo">
@@ -144,7 +154,7 @@ function Todos() {
           marginTop={2}
         >
           {isLoading && (
-            [1, 2, 3, 4].map((todo) => (
+            [1, 2, 3, 4, 5, 6, 7, 8].map((todo) => (
               <Grid item xs={3} key={todo}>
                 <Typography variant="h6" component="h2">
                   <Skeleton width="40%" />
@@ -175,6 +185,13 @@ function Todos() {
               <Typography variant="caption" component="p">
                 Completed: {todo.completed ? 'Yes' : 'No'}
               </Typography>
+              <Button
+                variant="outlined"
+                color="error"
+                onClick={() => deleteTodo({ id: todo.id })}
+              >
+                Delete
+              </Button>
             </Grid>
           ))}
           {createLoading && (
