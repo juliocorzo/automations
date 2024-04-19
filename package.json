@@ -10,7 +10,8 @@
     "test": "jest",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "prisma-generate": "prisma generate"
+    "prisma-generate": "prisma generate",
+    "postinstall": "prisma generate"
   },
   "prisma": {
     "schema": "database/schema.prisma"
