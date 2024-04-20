@@ -1,8 +1,28 @@
 import BaseLayout from '@/components/layouts/base';
 
-function HomePage() {
+type HomePageProps = {
+  setTheme: (key: 'dark' | 'light') => void;
+  currentThemeKey: 'dark' | 'light';
+};
+
+function HomePage({ setTheme, currentThemeKey }: HomePageProps) {
   return (
-    <BaseLayout title="automations" description="overengineered solutions for seldomnly done tasks" />
+    <BaseLayout
+      title="automations"
+      description="a space for experimentation"
+      subheader={[
+        {
+          title: 'experiments',
+          url: '/experiments',
+        },
+        {
+          title: 'about',
+          url: '/about',
+        },
+      ]}
+      setTheme={setTheme}
+      currentThemeKey={currentThemeKey}
+    />
   );
 }
 

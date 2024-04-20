@@ -16,16 +16,21 @@ import { LoadingButton } from '@mui/lab';
 import DownloadIcon from '@mui/icons-material/Download';
 import PreviewIcon from '@mui/icons-material/Preview';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
-import DashboardLayout from '@/components/layouts/dashboard';
 import { useSearchInternalAudiobookQuery } from '@/store/media/internal/audiobook';
 import { toKebabCase, toTitleCase } from '@/utilities/strings/case';
 import { removeRepeatedChar, slugify } from '@/utilities/strings/sanitize';
 import { ProgressiveImage } from '@/components/atoms/progressive-image';
+import BaseLayout from '@/components/layouts/base';
 
 const downloadSources = ['apple', 'audible'] as const;
 type DownloadSources = typeof downloadSources[number];
 
-export default function Audiobook() {
+type HomePageProps = {
+  setTheme: (key: 'dark' | 'light') => void;
+  currentThemeKey: 'dark' | 'light';
+};
+
+export default function HomePage({ setTheme, currentThemeKey }: HomePageProps) {
   const [downloadSource, setDownloadSource] = useState<DownloadSources | null>('apple');
   const [preSearchString, setPreSearchString] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
@@ -91,7 +96,7 @@ export default function Audiobook() {
   }, [searchResults]);
 
   return (
-    <DashboardLayout title="audiobook">
+    <BaseLayout title="audiobook" setTheme={setTheme} currentThemeKey={currentThemeKey}>
       <Grid
         container
         spacing={2}
@@ -245,6 +250,6 @@ export default function Audiobook() {
           ))}
         </Grid>
       )}
-    </DashboardLayout>
+    </BaseLayout>
   );
 }

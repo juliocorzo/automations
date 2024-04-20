@@ -11,8 +11,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       title, description, duedate, user,
     } = req.query as unknown as Todo;
 
-    console.log(req.query);
-
     if (!title || !description || !duedate || !user) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
@@ -29,7 +27,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
       res.status(200).json({ ...todo });
     } catch (error) {
-      console.log(error);
       return res.status(500).json({ error });
     } finally {
       await prisma.$disconnect();

@@ -1,0 +1,21 @@
+import { Canvas, Meta, Controls } from '@storybook/blocks';
+
+import * as HeaderStories from './Header.stories';
+
+<Meta of={HeaderStories} />
+
+# Header
+
+Global navigation, with some variations based on the page
+
+<Canvas of={HeaderStories.WithSubheader} />
+
+## Props
+
+<Controls />
+
+### Variants
+
+Breadcrumbs can be passed to provide easy navigation between pages. Links are Next.js `Link` components.
+
+<Canvas of={HeaderStories.WithBreadcrumbs} />
