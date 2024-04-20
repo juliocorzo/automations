@@ -1,11 +1,11 @@
 import BaseLayout from '@/components/layouts/base';
 
 type HomePageProps = {
-  setTheme: (key: 'dark' | 'light') => void;
-  currentThemeKey: 'dark' | 'light';
+  setTheme?: (key: 'dark' | 'light') => void;
+  currentThemeKey? : 'dark' | 'light';
 };
 
-function HomePage({ setTheme, currentThemeKey }: HomePageProps) {
+function HomePage({ setTheme = () => {}, currentThemeKey = 'dark' }: HomePageProps) {
   return (
     <BaseLayout
       title="automations"

@@ -14,9 +14,15 @@ function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
 
   const [activeTheme, setActiveTheme] = useState(darkTheme);
-  const [currentThemeKey, setCurrentThemeKey] = useState<'light' | 'dark'>('dark');
+  const [currentThemeKey, setCurrentThemeKey] = useState<'light' | 'dark' | undefined>(undefined);
 
   useEffect(() => {
+    // Default to dark mode if user has no preference
+    const hatesEyeballs = window.matchMedia('(prefers-color-scheme: light)').matches;
+    const preferredTheme = hatesEyeballs ? 'light' : 'dark';
+    if (currentThemeKey === undefined) {
+      setCurrentThemeKey(preferredTheme);
+    }
     setActiveTheme(currentThemeKey === 'light' ? lightTheme : darkTheme);
   }, [currentThemeKey]);
 

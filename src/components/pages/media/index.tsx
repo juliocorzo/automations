@@ -26,11 +26,11 @@ const downloadSources = ['apple', 'audible'] as const;
 type DownloadSources = typeof downloadSources[number];
 
 type HomePageProps = {
-  setTheme: (key: 'dark' | 'light') => void;
-  currentThemeKey: 'dark' | 'light';
+  setTheme?: (key: 'dark' | 'light') => void;
+  currentThemeKey?: 'dark' | 'light';
 };
 
-export default function HomePage({ setTheme, currentThemeKey }: HomePageProps) {
+export default function HomePage({ setTheme = () => {}, currentThemeKey = 'dark' }: HomePageProps) {
   const [downloadSource, setDownloadSource] = useState<DownloadSources | null>('apple');
   const [preSearchString, setPreSearchString] = useState('');
   const [searchTerm, setSearchTerm] = useState('');

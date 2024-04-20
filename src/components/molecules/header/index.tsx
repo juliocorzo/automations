@@ -148,7 +148,10 @@ export function Header({
               </GradientButton>
             ))}
 
-            <IconButton onClick={() => setTheme(currentThemeKey === 'dark' ? 'light' : 'dark')} suppressHydrationWarning>
+            <IconButton
+              size="small"
+              onClick={() => setTheme(currentThemeKey === 'dark' ? 'light' : 'dark')}
+            >
               {currentThemeKey !== 'dark' ? <DarkModeIcon /> : <LightModeIcon />}
             </IconButton>
           </Stack>
