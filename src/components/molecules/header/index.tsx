@@ -31,7 +31,7 @@ type HeaderProps = {
     url: string;
   }[];
   setTheme?: (key: 'dark' | 'light') => void;
-  currentThemeKey?: 'dark' | 'light';
+  currentThemeKey?: 'dark' | 'light' | undefined;
 };
 
 export function Header({
@@ -40,7 +40,7 @@ export function Header({
   subheader = [],
   breadcrumbs = [],
   setTheme = () => {},
-  currentThemeKey = 'dark',
+  currentThemeKey = undefined,
 }: HeaderProps) {
   const hasSubheader = subheader?.length !== 0;
   const [mounted, setMounted] = useState(false);
@@ -147,13 +147,15 @@ export function Header({
                 {subheaderTitle}
               </GradientButton>
             ))}
+            {currentThemeKey !== undefined && (
+              <IconButton
+                size="small"
+                onClick={() => setTheme(currentThemeKey === 'dark' ? 'light' : 'dark')}
+              >
+                {currentThemeKey !== 'dark' ? <DarkModeIcon /> : <LightModeIcon />}
+              </IconButton>
+            )}
 
-            <IconButton
-              size="small"
-              onClick={() => setTheme(currentThemeKey === 'dark' ? 'light' : 'dark')}
-            >
-              {currentThemeKey !== 'dark' ? <DarkModeIcon /> : <LightModeIcon />}
-            </IconButton>
           </Stack>
         </Box>
       </Container>

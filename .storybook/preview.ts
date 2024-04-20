@@ -23,7 +23,6 @@ const preview: Preview = {
       },
     },
     layout: 'centered',
-    actions: { argTypesRegex: "^on[A-Z].*" },
     controls: {
       expanded: true,
       matchers: {

@@ -7,14 +7,38 @@ type DashboardLayoutProps = {
   title: string;
   /** Page description */
   description?: string;
+  /** Theme control callback */
+  setTheme?: (key: 'dark' | 'light') => void;
+  currentThemeKey?: 'dark' | 'light';
+  breadcrumbs?: {
+    title: string;
+    url: string;
+  }[];
+  subheader?: {
+    title: string;
+    url: string;
+  }[];
   children?: ReactNode;
 };
 
 function DashboardLayout({
-  title, description, children,
+  title,
+  description,
+  children,
+  breadcrumbs = [],
+  subheader = [],
+  setTheme = () => {},
+  currentThemeKey = 'dark',
 }: DashboardLayoutProps) {
   return (
-    <Base title={title} description={description}>
+    <Base
+      title={title}
+      description={description}
+      setTheme={setTheme}
+      currentThemeKey={currentThemeKey}
+      breadcrumbs={breadcrumbs}
+      subheader={subheader}
+    >
       <Container maxWidth={false} sx={{ marginTop: 2 }}>
         {children}
       </Container>
