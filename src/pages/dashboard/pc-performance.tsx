@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import DashboardLayout from '@/components/layouts/dashboard';
 import { MetricCard } from '@/components/atoms/metric-card';
 import { useGetPerformanceMetricQuery } from '@/store/services/performance-metric';
-import { DateTime } from 'luxon';
 
 type PerformanceMetricsProps = {
   setTheme?: (key: 'dark' | 'light') => void;
@@ -56,7 +55,7 @@ function PerformanceMetrics({
       >
         {isLoading && 'Loading latest metrics...'}
         {error && 'Failed to load metrics'}
-        {!error && !isLoading && `Last updated ${DateTime.fromISO(metrics?.createdAt).toFormat('F') || 'never'}`}
+        {!error && !isLoading && `Last updated ${metrics?.createdAt || 'never'}`}
       </Typography>
       {!isLoading && !error && metrics && (
         <Grid
