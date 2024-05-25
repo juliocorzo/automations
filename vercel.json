@@ -1,7 +1,6 @@
 {
   "crons": [
     {
-      "name": "Fetch latest CPU PC metrics every minute",
       "schedule": "* * * * *",
       "path": "/api/pc-metrics/cpu"
     }
