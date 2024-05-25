@@ -4,6 +4,7 @@ const nextConfig = {
   eslint: {
     dirs: ["src"],
   },
+  transpilePackages: ["@mui/x-data-grid"]
 }
 
 module.exports = nextConfig

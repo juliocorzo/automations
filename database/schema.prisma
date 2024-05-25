@@ -8,22 +8,75 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
-model PerformanceMetric {
+model CpuMetric {
   id                              Int         @id @default(autoincrement())
-  cpuTemperature                  Float
-  cpuPower                        Float
-  createdAt                       DateTime
+  /// CPU package power draw in watts
+  cpu_package_power               Float
+  /// CPU package temperature in celsius
+  cpu_package_temp                Float
+  /// CPU core utilization in percentage
+  cpu_core_utilization            Int
+  /// CPU cores average temperature in celsius
+  cpu_cores_average_temp          Float
+  /// CPU core max temperature in celsius
+  cpu_core_max_temp               Float
+  /// CPU core min temperature in celsius
+  cpu_core_min_temp               Float
+  /// Hottest cores in integer array (from 0 to 23)
+  cpu_max_temp_cores              Int[]
+  /// Coolest cores in integer array (from 0 to 23)
+  cpu_min_temp_cores              Int[]
+  cpu_core_0_temp                 Float
+  cpu_core_1_temp                 Float
+  cpu_core_2_temp                 Float
+  cpu_core_3_temp                 Float
+  cpu_core_4_temp                 Float
+  cpu_core_5_temp                 Float
+  cpu_core_6_temp                 Float
+  cpu_core_7_temp                 Float
+  cpu_core_8_temp                 Float
+  cpu_core_9_temp                 Float
+  cpu_core_10_temp                Float
+  cpu_core_11_temp                Float
+  cpu_core_12_temp                Float
+  cpu_core_13_temp                Float
+  cpu_core_14_temp                Float
+  cpu_core_15_temp                Float
+  cpu_core_16_temp                Float
+  cpu_core_17_temp                Float
+  cpu_core_18_temp                Float
+  cpu_core_19_temp                Float
+  cpu_core_20_temp                Float
+  cpu_core_21_temp                Float
+  cpu_core_22_temp                Float
+  cpu_core_23_temp                Float
+  created_at                      DateTime
+  updated_at                      DateTime   @updatedAt
+
+  @@map("cpumetrics")
 }
 
-model Todo {
-  id                              Int         @id @default(autoincrement())
-  user                            String 
-  title                           String
-  description                     String
-  duedate                         DateTime
-  completed                       Boolean     @default(false)
-  createdat                       DateTime    @default(now())
-  updatedat                       DateTime    @updatedAt
+// model Metric {
+//   id                              Int         @id @default(autoincrement())
+//   cpu_package_power               Float
+//   cpu_package_temp                Float
+//   cpu_core_utilization            Int
+//   gpu_package_power               Float
+//   created_at                      DateTime
+//   updated_at                      DateTime   @updatedAt
 
-  @@map("todos")
-}
+//   @@map("pcmetrics")
+// }
+
+// model Todo {
+//   id                              Int         @id @default(autoincrement())
+//   user                            String 
+//   title                           String
+//   description                     String
+//   duedate                         DateTime
+//   completed                       Boolean     @default(false)
+//   createdat                       DateTime    @default(now())
+//   updatedat                       DateTime    @updatedAt
+
+//   @@map("todos")
+// }

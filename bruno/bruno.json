@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "automations",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
