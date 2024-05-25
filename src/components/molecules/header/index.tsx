@@ -12,6 +12,7 @@ import { GradientButton } from '@/components/atoms/gradient-button';
 import { toKebabCase } from '@/utilities/strings/case';
 import LightModeIcon from '@mui/icons-material/LightModeOutlined';
 import DarkModeIcon from '@mui/icons-material/NightsStayOutlined';
+import { ui } from '@/constants/ui';
 
 type HeaderProps = {
   /** Page title and main header */
@@ -58,7 +59,7 @@ export function Header({
       >
         <Box
           sx={{
-            minHeight: 64,
+            minHeight: ui.headerHeight,
             display: 'flex',
             alignItems: 'center',
             justifyContent: hasSubheader ? 'space-between' : 'center',

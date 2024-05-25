@@ -39,7 +39,7 @@ function DashboardLayout({
       breadcrumbs={breadcrumbs}
       subheader={subheader}
     >
-      <Container maxWidth={false} sx={{ marginTop: 2 }}>
+      <Container maxWidth={false} sx={{ paddingLeft: { xs: 0 }, paddingRight: { xs: 0 } }}>
         {children}
       </Container>
     </Base>
@@ -47,3 +47,4 @@ function DashboardLayout({
 }
 
 export default DashboardLayout;
+export { DashboardLayout };
