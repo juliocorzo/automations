@@ -1,0 +1,15 @@
+meta {
+  name: Create Table
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/pc-metrics/admin/create-table
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{pcMetricDbUpdateKey}}
+}

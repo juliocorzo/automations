@@ -1,0 +1,15 @@
+meta {
+  name: Delete Table
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{baseUrl}}/pc-metrics/delete-table
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{pcMetricDbUpdateKey}}
+}

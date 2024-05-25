@@ -1,0 +1,15 @@
+meta {
+  name: Add Table Column
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/pc-metrics/admin/add-table-column
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{pcMetricDbUpdateKey}}
+}
