@@ -11,8 +11,6 @@ export default function CpuMetrics() {
     return null;
   }
 
-  console.log(data);
-
   return (
     <Box width="100vw" height="100vh">
       <CpuDataGrid loading={isFetching} data={data} />

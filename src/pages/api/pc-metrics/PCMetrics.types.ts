@@ -1,5 +1,3 @@
-import type { Metric as PCMetricsServerResponse } from '@prisma/client';
-
 /** Response from Aquasuite when `/view` path is used */
 export type AquaSuiteViewResponse = {
   /** Array of all metrics */
@@ -32,5 +30,3 @@ export type AquaSuiteCirconusResponse = {
   /** Power draw of GPU package, measured in W */
   GPU_PACKAGE_POWER: string;
 };
-
-export type { PCMetricsServerResponse };

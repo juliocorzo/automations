@@ -7,7 +7,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     prisma.$connect();
 
-    const allRows = await prisma.metric.findMany();
+    const allRows = await prisma.cpuMetric.findMany();
 
     prisma.$disconnect();
 
