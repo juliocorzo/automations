@@ -22,8 +22,10 @@ function parseResponse(response: AquaSuiteViewResponse) {
 // parseCoreTemps to numbers, also moves from 1-24 to 0-23
 function parseCoreTemps(response: AquaSuiteViewResponse) {
   const coreTemps = response.d.reduce((acc, metric) => {
-    if (/CPU_CORE_([1-9]|1[0-9]|2[0-4])_TEMP/g.test(metric.n)) {
-      acc[`CPU_CORE_${parseInt(metric.n.split('_')[2], 10) - 1}_TEMP`] = parseFloat(metric.v);
+    const coreNumber = parseInt(metric.n.split('_')[2], 10);
+    const isCoreTemp = coreNumber >= 1 && coreNumber <= 24;
+    if (isCoreTemp) {
+      acc[`CPU_CORE_${coreNumber - 1}_TEMP`] = parseFloat(metric.v);
     }
     return acc;
   }, {} as Record<string, number>);
