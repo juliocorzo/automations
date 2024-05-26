@@ -14,6 +14,10 @@ type DashboardLayoutProps = {
     title: string;
     url: string;
   }[];
+  postcrumbs?: {
+    title: string;
+    url: string;
+  }[];
   subheader?: {
     title: string;
     url: string;
@@ -26,6 +30,7 @@ function DashboardLayout({
   description,
   children,
   breadcrumbs = [],
+  postcrumbs = [],
   subheader = [],
   setTheme = () => {},
   currentThemeKey = 'dark',
@@ -37,6 +42,7 @@ function DashboardLayout({
       setTheme={setTheme}
       currentThemeKey={currentThemeKey}
       breadcrumbs={breadcrumbs}
+      postcrumbs={postcrumbs}
       subheader={subheader}
     >
       <Container maxWidth={false} sx={{ paddingLeft: { xs: 0 }, paddingRight: { xs: 0 } }}>
