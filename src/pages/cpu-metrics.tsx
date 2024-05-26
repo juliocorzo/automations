@@ -21,8 +21,37 @@ export default function CpuMetrics({ setTheme = () => {}, currentThemeKey = 'dar
   return (
     <DashboardLayout
       title="CPU Metrics"
+      description="Rolling 1-minute updates of CPU temperatures"
       setTheme={setTheme}
       currentThemeKey={currentThemeKey}
+      breadcrumbs={
+        [
+          {
+            title: 'summary',
+            url: '/',
+          },
+          {
+            title: 'daily',
+            url: '/daily',
+          },
+          {
+            title: 'cpu',
+            url: '/daily/cpu',
+          },
+          {
+            title: 'temperatures',
+            url: '/daily/cpu/temperature',
+          },
+        ]
+      }
+      postcrumbs={
+        [
+          {
+            title: 'explanation',
+            url: '/daily/cpu/temperature/explanation',
+          },
+        ]
+      }
     >
       <Box width="100vw" height="calc(100vh - 64px)">
         <CpuDataGrid

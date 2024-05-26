@@ -22,6 +22,13 @@ model CpuMetric {
   cpu_core_max_temp               Float
   /// CPU core min temperature in celsius
   cpu_core_min_temp               Float
+  // TODO: Add delta between hottest and coolest cores
+  /// Delta between hottest and coolest cores in celsius
+  // cpu_core_temp_delta             Float
+  /// Delta between hottest and coolest performance cores in celsius
+  // cpu_pcore_temp_delta            Float
+  /// Delta between hottest and coolest efficient cores in celsius
+  // cpu_ecore_temp_delta            Float
   /// Hottest cores in integer array (from 0 to 23)
   cpu_max_temp_cores              Int[]
   /// Coolest cores in integer array (from 0 to 23)

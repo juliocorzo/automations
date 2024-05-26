@@ -31,6 +31,11 @@ type HeaderProps = {
     title: string;
     url: string;
   }[];
+  /** Forward-looking navigation links */
+  postcrumbs?: {
+    title: string;
+    url: string;
+  }[];
   setTheme?: (key: 'dark' | 'light') => void;
   currentThemeKey?: 'dark' | 'light' | undefined;
 };
@@ -40,6 +45,7 @@ export function Header({
   description,
   subheader = [],
   breadcrumbs = [],
+  postcrumbs = [],
   setTheme = () => {},
   currentThemeKey = undefined,
 }: HeaderProps) {
@@ -62,7 +68,8 @@ export function Header({
             minHeight: ui.headerHeight,
             display: 'flex',
             alignItems: 'center',
-            justifyContent: hasSubheader ? 'space-between' : 'center',
+            // justifyContent: hasSubheader ? 'space-between' : 'center',
+            justifyContent: 'space-between',
           }}
         >
           <Stack
@@ -110,7 +117,7 @@ export function Header({
                     },
                   }}
                 >
-                  automations
+                  dashboard
                 </Typography>
                 {breadcrumbs.map(({ title: breadcrumbTitle, url }, index) => (
                   <Typography
@@ -126,6 +133,22 @@ export function Header({
                     }}
                   >
                     {breadcrumbTitle}
+                  </Typography>
+                ))}
+                {postcrumbs.map(({ title: postcrumbTitle, url }) => (
+                  <Typography
+                    key={toKebabCase(url)}
+                    component={Link}
+                    href={url}
+                    sx={{
+                      color: 'inherit',
+                      textDecoration: 'none',
+                      '&:hover': {
+                        color: 'success.main',
+                      },
+                    }}
+                  >
+                    {postcrumbTitle}
                   </Typography>
                 ))}
               </Breadcrumbs>
@@ -153,7 +176,13 @@ export function Header({
                 size="small"
                 onClick={() => setTheme(currentThemeKey === 'dark' ? 'light' : 'dark')}
               >
-                {currentThemeKey !== 'dark' ? <DarkModeIcon /> : <LightModeIcon />}
+                {currentThemeKey !== 'dark'
+                  ? (
+                    <DarkModeIcon sx={{ color: (theme) => theme.palette.grey['500'] }} />
+                  )
+                  : (
+                    <LightModeIcon sx={{ color: (theme) => theme.palette.grey['500'] }} />
+                  )}
               </IconButton>
             )}
 

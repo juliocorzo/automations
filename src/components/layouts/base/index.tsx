@@ -9,6 +9,10 @@ type LayoutProps = {
     title: string;
     url: string;
   }[];
+  postcrumbs?: {
+    title: string;
+    url: string;
+  }[];
   subheader?: {
     title: string;
     url: string;
@@ -22,6 +26,7 @@ function BaseLayout({
   title = 'automations',
   description = 'a space for experimentation',
   breadcrumbs = [],
+  postcrumbs = [],
   subheader = [],
   setTheme = () => {},
   currentThemeKey = 'dark',
@@ -38,6 +43,7 @@ function BaseLayout({
           title={title}
           description={description}
           breadcrumbs={breadcrumbs}
+          postcrumbs={postcrumbs}
           subheader={subheader}
           setTheme={setTheme}
           currentThemeKey={currentThemeKey}
