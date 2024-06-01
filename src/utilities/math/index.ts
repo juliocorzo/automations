@@ -11,9 +11,14 @@ const divide = (a: number, b: number) => {
   return a / b;
 };
 
+function findNumberDelta(numbers: number[]): number {
+  return Math.abs(Math.max(...numbers) - Math.min(...numbers));
+}
+
 export {
   add,
   subtract,
   multiply,
   divide,
+  findNumberDelta,
 };
