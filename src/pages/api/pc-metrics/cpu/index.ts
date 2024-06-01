@@ -7,7 +7,7 @@ import { DateTime } from 'luxon';
 import { env } from '@/env/server';
 
 const prisma = new PrismaClient({
-  log: ['query', 'info', 'warn', 'error'],
+  log: ['error'],
 });
 
 function parseResponse(response: AquaSuiteViewResponse) {
@@ -56,6 +56,22 @@ function findColdestCores(coreTemps: Record<string, number>): number[] {
 
   return coldestCores;
 }
+
+// function findAllCoreTempDelta(minTemp: number, maxTemp: number) {
+//   return maxTemp - minTemp;
+// }
+
+// function findPerformanceCoreTempDelta(coreTemps: Record<string, number>): number {
+//   const temperatures: number[] = [];
+//   for (let i = 0; i < 8; i += 1) {
+//     temperatures.push(coreTemps[`CPU_CORE_${i}_TEMP`]);
+//   }
+
+//   const minTemp = Math.min(...temperatures);
+//   const maxTemp = Math.max(...temperatures);
+
+//   return maxTemp - minTemp;
+// }
 
 const { AQUASUITE_CPU_METRICS_KEY, AQUASUITE_URL, CRON_SECRET } = env;
 
@@ -140,15 +156,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(500).json({ error });
     }
 
+    const minAllCoreTemp = findMinCoreTemp(coreTemps);
+    const maxAllCoreTemp = parseFloat(CPU_CORE_MAX_TEMP);
+    // const allCoreTempDelta = findAllCoreTempDelta(minAllCoreTemp, maxAllCoreTemp);
+
     const newRow = Prisma.validator<Prisma.CpuMetricCreateInput>()({
       cpu_package_power: parseFloat(CPU_PACKAGE_POWER) || 0,
       cpu_package_temp: parseFloat(CPU_PACKAGE_TEMP) || 0,
       cpu_core_utilization: parseInt(CPU_CORE_UTILIZATION, 10) || 0,
       cpu_cores_average_temp: parseFloat(CPU_CORES_AVERAGE_TEMP) || 0,
-      cpu_core_max_temp: parseFloat(CPU_CORE_MAX_TEMP) || 0,
-      cpu_core_min_temp: findMinCoreTemp(coreTemps),
+      cpu_core_max_temp: maxAllCoreTemp || -1,
+      cpu_core_min_temp: minAllCoreTemp || -1,
       cpu_max_temp_cores: findHottestCores(coreTemps),
       cpu_min_temp_cores: findColdestCores(coreTemps),
+      // cpu_core_temp_delta: allCoreTempDelta,
       cpu_core_0_temp: CPU_CORE_0_TEMP,
       cpu_core_1_temp: CPU_CORE_1_TEMP,
       cpu_core_2_temp: CPU_CORE_2_TEMP,

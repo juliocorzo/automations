@@ -12,6 +12,7 @@ const config: Config = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   collectCoverage: true,
   coverageReporters: ['html'],
+  extensionsToTreatAsEsm: ['.ts'],
 };
 
 export default createJestConfig(config);
