@@ -1,37 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import type { AquaSuiteViewResponse } from '@/pages/api/pc-metrics/PCMetrics.types';
 import { PrismaClient, Prisma } from '@prisma/client';
 import { aquasuiteCpuMetricResponseSchema } from '@/types/pc-metrics';
 import type { AquasuiteCpuMetricResponse } from '@/types/pc-metrics';
 import { DateTime } from 'luxon';
 import { env } from '@/env/server';
+import { parseAquasuiteViewResponse, parseCoreTemps } from '@/utilities/pc-metrics/cpu';
 
 const prisma = new PrismaClient({
   log: ['error'],
 });
-
-function parseResponse(response: AquaSuiteViewResponse) {
-  const metrics = response.d.reduce((acc, metric) => {
-    acc[metric.n] = metric.v;
-    return acc;
-  }, {} as Record<string, string>);
-
-  return metrics;
-}
-
-// parseCoreTemps to numbers, also moves from 1-24 to 0-23
-function parseCoreTemps(response: AquaSuiteViewResponse) {
-  const coreTemps = response.d.reduce((acc, metric) => {
-    const coreNumber = parseInt(metric.n.split('_')[2], 10);
-    const isCoreTemp = coreNumber >= 1 && coreNumber <= 24;
-    if (isCoreTemp) {
-      acc[`CPU_CORE_${coreNumber - 1}_TEMP`] = parseFloat(metric.v);
-    }
-    return acc;
-  }, {} as Record<string, number>);
-
-  return coreTemps;
-}
 
 function findMinCoreTemp(coreTemps: Record<string, number>) {
   return Math.min(...Object.values(coreTemps));
@@ -109,7 +86,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       CPU_CORE_UTILIZATION,
       CPU_CORES_AVERAGE_TEMP,
       CPU_CORE_MAX_TEMP,
-    } = parseResponse(body);
+    } = parseAquasuiteViewResponse(body);
 
     const coreTemps = parseCoreTemps(body);
 
@@ -150,7 +127,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
 
       if (latestMetric) {
-        return res.status(200).json({ ...latestMetric });
+        return res.status(304).json({ ...latestMetric });
       }
     } catch (error) {
       return res.status(500).json({ error });

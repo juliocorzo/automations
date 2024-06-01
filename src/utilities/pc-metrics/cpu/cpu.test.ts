@@ -1,5 +1,15 @@
-import { parseAquasuiteViewResponse, parseCoreTemps } from '@/utilities/pc-metrics/cpu';
-import type { AquaSuiteViewResponse } from '@/utilities/pc-metrics/cpu';
+import {
+  parseAquasuiteViewResponse,
+  parseCoreTemps,
+  findMinCoreTemp,
+  // findHottestCores,
+  // findColdestCores,
+} from '@/utilities/pc-metrics/cpu';
+import type {
+  AquaSuiteViewResponse,
+  CoreTemps,
+  // CoreNumbers,
+} from '@/utilities/pc-metrics/cpu';
 
 describe('parseAquasuiteViewResponse', () => {
   test('returns values from the call to get PC metrics from API', () => {
@@ -70,6 +80,7 @@ describe('parseCoreTemps', () => {
     expect(parseCoreTemps(response)).toEqual({});
   });
   test('handles a malformed response', () => {
+    const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
     const response = {
       d: {},
       g: '123',
@@ -77,28 +88,59 @@ describe('parseCoreTemps', () => {
       t: '2021-09-10T12:00:00',
     } as AquaSuiteViewResponse;
 
-    expect(parseCoreTemps(response)).toEqual({});
+    const result = parseCoreTemps(response);
+    expect(result).toEqual({});
+    expect(consoleError).toHaveBeenCalled();
   });
-  test.skip('handles a response with a custom core count', () => {
-    const coresArray = Array.from({ length: 24 }, (_, i) => ({
-      n: `CPU_CORE_${i}_TEMP`, v: '30', i, u: 'C',
-    })) as AquaSuiteViewResponse['d'];
+  test('handles a response with a 24 cores', () => {
+    const mockCoresArray: AquaSuiteViewResponse['d'] = [];
+    for (let i = 1; i <= 24; i += 1) {
+      mockCoresArray.push({
+        n: `CPU_CORE_${i}_TEMP`, v: '30', i, u: 'C',
+      });
+    }
 
-    const response = {
-      d: coresArray,
+    const input = {
+      d: mockCoresArray,
       g: '123',
       n: '456',
       t: '2021-09-10T12:00:00',
     };
 
-    const parsedResponse = Object.fromEntries(
-      coresArray.map((core) => [core.n, parseFloat(core.v)]),
+    const output = Object.fromEntries(
+      mockCoresArray.map((core) => [`CPU_CORE_${core.i - 1}_TEMP`, parseFloat(core.v)]),
     );
 
-    console.log(parsedResponse);
+    expect(parseCoreTemps(input)).toEqual(output);
+  });
+});
 
-    console.log(parseCoreTemps(response, 24));
+describe('findMinCoreTemp', () => {
+  test('returns the minimum core temperature', () => {
+    const coreTemps: CoreTemps = {
+      CPU_CORE_0_TEMP: 100,
+      CPU_CORE_1_TEMP: 90,
+      CPU_CORE_2_TEMP: 42,
+    };
 
-    expect(parseCoreTemps(response, 24)).toEqual(parsedResponse);
+    expect(findMinCoreTemp(coreTemps)).toBe(42);
+  });
+
+  test('returns the minimum core temperature when there is only one core', () => {
+    const coreTemps: CoreTemps = {
+      CPU_CORE_0_TEMP: 42,
+    };
+
+    expect(findMinCoreTemp(coreTemps)).toBe(42);
+  });
+
+  test('returns the minimum core temperature when there are multiple cores', () => {
+    const coreTemps: CoreTemps = {
+      CPU_CORE_0_TEMP: 100,
+      CPU_CORE_1_TEMP: 90,
+      CPU_CORE_2_TEMP: 42,
+    };
+
+    expect(findMinCoreTemp(coreTemps)).toBe(42);
   });
 });

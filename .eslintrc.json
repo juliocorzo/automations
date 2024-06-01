@@ -1,7 +1,7 @@
 {
   "root": true,
   "extends": [
-    // "next",
+    "next",
     "next/core-web-vitals",
     "airbnb",
     "airbnb-typescript"
@@ -13,7 +13,7 @@
   "parserOptions": {
     "project": "./tsconfig.json"
   },
-  "ignorePatterns": ["next.config.js"],
+  "ignorePatterns": ["next.config.js", "newrelic.js", "next-env.d.ts"],
   "rules": {
     "linebreak-style": "off",
     "react/react-in-jsx-scope": "off",
