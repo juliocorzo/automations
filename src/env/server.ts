@@ -9,11 +9,15 @@ export const env = createEnv({
     AQUASUITE_CPU_METRICS_KEY: z.string(),
     OPEN_AI_KEY: z.string(),
     CRON_SECRET: z.string(),
+    NEW_RELIC_APP_NAME: z.string(),
+    NEW_RELIC_LICENSE_KEY: z.string(),
   },
   runtimeEnv: {
     AQUASUITE_URL: process.env.AQUASUITE_URL,
     AQUASUITE_CPU_METRICS_KEY: process.env.AQUASUITE_CPU_METRICS_KEY,
     OPEN_AI_KEY: process.env.OPEN_AI_KEY,
     CRON_SECRET: process.env.CRON_SECRET,
+    NEW_RELIC_APP_NAME: process.env.NEW_RELIC_APP_NAME,
+    NEW_RELIC_LICENSE_KEY: process.env.NEW_RELIC_LICENSE_KEY,
   },
 });
